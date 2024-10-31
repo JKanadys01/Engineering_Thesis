@@ -33,6 +33,7 @@
             textBox_log = new TextBox();
             label2 = new Label();
             button_log = new Button();
+            button_simulation = new Button();
             SuspendLayout();
             // 
             // textBox_gesture
@@ -82,11 +83,22 @@
             button_log.UseVisualStyleBackColor = true;
             button_log.Click += button_log_Click;
             // 
+            // button_simulation
+            // 
+            button_simulation.Location = new Point(92, 295);
+            button_simulation.Name = "button_simulation";
+            button_simulation.Size = new Size(75, 23);
+            button_simulation.TabIndex = 5;
+            button_simulation.Text = "Simulation";
+            button_simulation.UseVisualStyleBackColor = true;
+            button_simulation.Click += button_simulation_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button_simulation);
             Controls.Add(button_log);
             Controls.Add(label2);
             Controls.Add(textBox_log);
@@ -105,6 +117,7 @@
         private TextBox textBox_log;
         private Label label2;
         private Button button_log;
+        private Button button_simulation;
     }
 
 

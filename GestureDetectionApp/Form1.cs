@@ -7,6 +7,9 @@ namespace GestureDetectionApp
 {
     public partial class Form1 : Form
     {
+        private SimulationForm simulationForm;
+        private bool isSpeechEnabled = true;
+
         UdpClient udpClient;
         UdpClient udpClient2;
         SpeechSynthesizer synthesizer;
@@ -22,20 +25,26 @@ namespace GestureDetectionApp
 
         private void ReceiveCallback(IAsyncResult ar)
         {
-            IPEndPoint ip = new IPEndPoint(IPAddress.Any, 12345);
-            byte[] bytes = udpClient.EndReceive(ar, ref ip);
-            string message = Encoding.ASCII.GetString(bytes);
-            UpdateTextBoxGesture(message);
-            udpClient.BeginReceive(ReceiveCallback, null);
+            if (isSpeechEnabled)
+            {
+                IPEndPoint ip = new IPEndPoint(IPAddress.Any, 12345);
+                byte[] bytes = udpClient.EndReceive(ar, ref ip);
+                string message = Encoding.ASCII.GetString(bytes);
+                UpdateTextBoxGesture(message);
+                udpClient.BeginReceive(ReceiveCallback, null);
+            }
         }
 
         private void ReceiveLog(IAsyncResult ar)
         {
-            IPEndPoint ip = new IPEndPoint(IPAddress.Any, 12346);
-            byte[] bytes = udpClient2.EndReceive(ar, ref ip);
-            string message = Encoding.ASCII.GetString(bytes);
-            UpdateTextBoxLog(message);
-            udpClient2.BeginReceive(ReceiveLog, null);
+            if (isSpeechEnabled)
+            {
+                IPEndPoint ip = new IPEndPoint(IPAddress.Any, 12346);
+                byte[] bytes = udpClient2.EndReceive(ar, ref ip);
+                string message = Encoding.ASCII.GetString(bytes);
+                UpdateTextBoxLog(message);
+                udpClient2.BeginReceive(ReceiveLog, null);
+            }
         }
 
         private void UpdateTextBoxGesture(string text)
@@ -47,7 +56,11 @@ namespace GestureDetectionApp
             else
             {
                 textBox_gesture.Text = text;
-                SpeakText(text);
+                // Only speak if speech is enabled
+                if (isSpeechEnabled)
+                {
+                    SpeakText(text);
+                }
             }
         }
 
@@ -80,7 +93,7 @@ namespace GestureDetectionApp
 
         private void button_log_Click(object sender, EventArgs e)
         {
-            
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Text Files|*.txt";
             saveFileDialog.Title = "Save Log File";
@@ -90,6 +103,16 @@ namespace GestureDetectionApp
             {
                 System.IO.File.WriteAllText(saveFileDialog.FileName, textBox_log.Text);
                 MessageBox.Show("Log saved successfully!", "Save Log", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void button_simulation_Click(object sender, EventArgs e)
+        {
+            isSpeechEnabled = false;
+            if (simulationForm == null || simulationForm.IsDisposed)
+            {
+                simulationForm = new SimulationForm();
+                simulationForm.Show();
             }
         }
     }

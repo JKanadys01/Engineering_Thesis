@@ -20,3 +20,7 @@ C:\Users\jakub\Documents\GitHub\Praca-Dyplomowa\Praca_Dyplomowa\GestureDetection
 C:\Users\jakub\Documents\GitHub\Praca-Dyplomowa\Praca_Dyplomowa\GestureDetectionApp\obj\Debug\net8.0-windows\GestureDetectionApp.pdb
 C:\Users\jakub\Documents\GitHub\Praca-Dyplomowa\Praca_Dyplomowa\GestureDetectionApp\obj\Debug\net8.0-windows\GestureDetectionApp.genruntimeconfig.cache
 C:\Users\jakub\Documents\GitHub\Praca-Dyplomowa\Praca_Dyplomowa\GestureDetectionApp\obj\Debug\net8.0-windows\ref\GestureDetectionApp.dll
+C:\Users\jakub\Documents\GitHub\Praca-Dyplomowa\Praca_Dyplomowa\GestureDetectionApp\bin\Debug\net8.0-windows\SharpGL.dll
+C:\Users\jakub\Documents\GitHub\Praca-Dyplomowa\Praca_Dyplomowa\GestureDetectionApp\bin\Debug\net8.0-windows\SharpGL.SceneGraph.dll
+C:\Users\jakub\Documents\GitHub\Praca-Dyplomowa\Praca_Dyplomowa\GestureDetectionApp\bin\Debug\net8.0-windows\SharpGL.WinForms.dll
+C:\Users\jakub\Documents\GitHub\Praca-Dyplomowa\Praca_Dyplomowa\GestureDetectionApp\obj\Debug\net8.0-windows\GestureDetectionApp.SimulationForm.resources

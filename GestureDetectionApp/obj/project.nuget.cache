@@ -1,10 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "ruYnD3wDmkNgV4w9VPsc6RBOSstctUrDaXmA7/djLHWRkoAwhFypcUub/KOZdndhanf1uyZHRqRqp9b85Kt9DQ==",
+  "dgSpecHash": "Y2zqL7HKU4Bq2ldcNDydB+mP6Ppxfx2f2G4MdPmfuEOSsNB4MEhJQu1MUrPOhNCsqxqQKSa9i3Vgl4JFxGSkCQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\jakub\\Documents\\GitHub\\Praca-Dyplomowa\\Praca_Dyplomowa\\GestureDetectionApp\\GestureDetectionApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jakub\\.nuget\\packages\\32feet.net\\3.5.0\\32feet.net.3.5.0.nupkg.sha512",
+    "C:\\Users\\jakub\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\jakub\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\jakub\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\jakub\\.nuget\\packages\\sharpgl\\3.1.1\\sharpgl.3.1.1.nupkg.sha512",
+    "C:\\Users\\jakub\\.nuget\\packages\\sharpgl.scenegraph\\3.1.1\\sharpgl.scenegraph.3.1.1.nupkg.sha512",
+    "C:\\Users\\jakub\\.nuget\\packages\\sharpgl.winforms\\3.1.1\\sharpgl.winforms.3.1.1.nupkg.sha512",
+    "C:\\Users\\jakub\\.nuget\\packages\\system.data.datasetextensions\\4.5.0\\system.data.datasetextensions.4.5.0.nupkg.sha512",
+    "C:\\Users\\jakub\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
     "C:\\Users\\jakub\\.nuget\\packages\\system.speech\\8.0.0\\system.speech.8.0.0.nupkg.sha512"
   ],
   "logs": [
