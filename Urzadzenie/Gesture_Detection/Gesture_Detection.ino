@@ -7,11 +7,11 @@
 
 Adafruit_MPU6050 mpu;
 Adafruit_HMC5883_Unified magnetometer = Adafruit_HMC5883_Unified(123458);
-const char *pcIP = "192.168.1.5";
-const char *ssid = "Korbank_2.4G_45C23C";
-const char *password = "79200948";
-const char *ssid3 = "Redmi Note 12";
-const char *password3 = "kubus123";
+const char *pcIP = "192.168.38.34";
+const char *ssid2 = "Korbank_2.4G_45C23C";
+const char *password2 = "79200948";
+const char *ssid = "Redmi Note 12";
+const char *password = "kubus123";
 
 const int port = 12345;
 const int logport = 12346;
@@ -77,6 +77,9 @@ void setup() {
     Serial.println("Ooops, no HMC5883 detected ... Check your wiring!");
     while(1);
   }
+  magnetometer.setMagGain(HMC5883_MAGGAIN_1_3); // Ustawia przyrost na poziomie 1.3 Gaussa
+
+
 
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
@@ -190,7 +193,7 @@ void updateBuffer(float acc[3], float gyro[3]) {
         accBuffer[i][bufferIndex] = acc[i];
         gyroBuffer[i][bufferIndex] = gyro[i];
     }
-    bufferIndex = (bufferIndex + 1) % BUFFER_SIZE;  // Aktualizacja indeksu
+    bufferIndex = (bufferIndex + 1) % BUFFER_SIZE;  
 }
 
 // Funkcja sprawdzająca, czy wartości w buforze przekraczają próg przez całą długość bufora
