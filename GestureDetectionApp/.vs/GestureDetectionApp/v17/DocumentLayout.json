@@ -18,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 243,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,28 +34,27 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Form1.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\jakub\\Documents\\GitHub\\Praca-Dyplomowa\\Praca_Dyplomowa\\GestureDetectionApp\\Form1.cs",
-              "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "C:\\Users\\jakub\\Documents\\GitHub\\Praca-Dyplomowa\\Praca_Dyplomowa\\GestureDetectionApp\\Form1.cs [Design]",
-              "RelativeToolTip": "Form1.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-07T09:16:18.434Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Users\\jakub\\Documents\\GitHub\\Praca-Dyplomowa\\Praca_Dyplomowa\\GestureDetectionApp\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Users\\jakub\\Documents\\GitHub\\Praca-Dyplomowa\\Praca_Dyplomowa\\GestureDetectionApp\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAQwCUAAABBAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAmwCAAAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-10T07:11:45.553Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs [Projekt]",
+              "DocumentMoniker": "C:\\Users\\jakub\\Documents\\GitHub\\Praca-Dyplomowa\\Praca_Dyplomowa\\GestureDetectionApp\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\Users\\jakub\\Documents\\GitHub\\Praca-Dyplomowa\\Praca_Dyplomowa\\GestureDetectionApp\\Form1.cs [Projekt]",
+              "RelativeToolTip": "Form1.cs [Projekt]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T09:16:18.434Z"
             }
           ]
         }

@@ -7,12 +7,14 @@
 
 Adafruit_MPU6050 mpu;
 Adafruit_HMC5883_Unified magnetometer = Adafruit_HMC5883_Unified(123458);
-const char *pcIP = "192.168.38.34";
-const char *ssid2 = "Korbank_2.4G_45C23C";
-const char *password2 = "79200948";
-const char *ssid = "Redmi Note 12";
-const char *password = "kubus123";
+const char *pcIP = "192.168.1.5";
+const char *ssid = "Korbank_2.4G_45C23C";
+const char *password = "79200948";
+// Nazwa i hasło do sieci
+const char *ssid2 = "Redmi Note 12";
+const char *password2 = "kubusa";
 
+// Numery portow dla Udp
 const int port = 12345;
 const int logport = 12346;
 const int visualizationport = 12347;
@@ -51,43 +53,34 @@ const char* gyroGestures[3][2] = {
 };
 
 unsigned long lastGestureTime = 0; // Czas ostatniego wykrytego gestu
-unsigned long lastReturnTime = 0; // Czas ostatniego wykrytego powrotu do stanu początkowego
+
 
 void setup() {
   Serial.begin(115200);
   while (!Serial);
-
-  Serial.println("Adafruit MPU6050 Gesture Detection");
-
+  Serial.println("Gesture Detection");
   // Inicjalizacja MPU6050
   if (!mpu.begin()) {
-    Serial.println("Failed to find MPU6050 chip");
+    Serial.println("Failed to find MPU6050");
     while (1) delay(10);
   }
-  Serial.println("MPU6050 Found!");
   // Konfiguracja czujników
   mpu.setAccelerometerRange(MPU6050_RANGE_16_G);
   mpu.setGyroRange(MPU6050_RANGE_500_DEG);
   mpu.setFilterBandwidth(MPU6050_BAND_10_HZ);
 
-   /* Initialise the sensor */
   if(!magnetometer.begin())
   {
-    /* There was a problem detecting the HMC5883 ... check your connections */
-    Serial.println("Ooops, no HMC5883 detected ... Check your wiring!");
-    while(1);
+    Serial.println("Failed to find HMC5883");
+    while(1) delay(10);
   }
   magnetometer.setMagGain(HMC5883_MAGGAIN_1_3); // Ustawia przyrost na poziomie 1.3 Gaussa
-
-
 
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
-  Serial.println("");
-  Serial.println("WiFi connected");
 
   sensors_event_t accel, gyro, temp;
   mpu.getEvent(&accel, &gyro, &temp);
@@ -99,18 +92,12 @@ void setup() {
   delay(100);
 }
 
-void loop() {
-    //unsigned long startTime = millis(); // Zaczynamy pomiar czasu
-    // Odczyt danych z akcelerometru i żyroskopu
+void loop() 
+{
+  // Odczyt danych z akcelerometru i żyroskopu
     sensors_event_t accel, gyro, temp, mag;
     mpu.getEvent(&accel, &gyro, &temp);
     magnetometer.getEvent(&mag);
-    
-    // Zmierz czas po odczycie
-    //unsigned long readTime = millis() - startTime; // Czas trwania odczytu
-    //Serial.print("Czas odczytu z czujników: ");
-    //Serial.print(readTime);
-    //Serial.println(" ms");
 
     magValues[0] = mag.magnetic.x;
     magValues[1] = mag.magnetic.y;
@@ -127,23 +114,12 @@ void loop() {
     magValues[1] = mag.magnetic.y;
     magValues[2] = mag.magnetic.z;
 
-
     deltaAcc[0] = accel.acceleration.x - initialAcc[0];
     deltaAcc[1] = accel.acceleration.y - initialAcc[1];
     deltaAcc[2] = accel.acceleration.z - initialAcc[2];
 
-
     // Przetworzenie kwaternionu z danych żyroskopu
-    processGyroQuaternion(orientation, gyroValues,accValues,magValues, dt);
-
-    Serial.print("accX:");
-    Serial.println(deltaAcc[0]);
-    
-    Serial.print("accY:");
-    Serial.println(deltaAcc[1]);
-    
-    Serial.print("accZ:");
-    Serial.println(deltaAcc[2]);
+    processQuaternion(orientation, gyroValues,accValues,magValues, dt);
 
     // Wysyłanie zaktualizowanego kwaternionu przez UDP
     sendVisualization();
@@ -152,31 +128,58 @@ void loop() {
     updateBuffer(deltaAcc, gyroValues);
 
     unsigned long currentTime = millis();
-    
-    
+      
     // Sprawdzenie, czy minął wymagany czas od ostatniego wykrytego gestu
-    if (currentTime - lastGestureTime >= GESTURE_TIME) {
-        for (int axis = 0; axis < 3; ++axis) {
-          if(abs(accValues[2]) > (abs(accValues[0]) + abs(accValues[1])))
+    if (currentTime - lastGestureTime >= GESTURE_TIME) 
+    {
+      for (int axis = 0; axis < 3; ++axis) 
+      {
+        if(abs(accValues[2]) > (abs(accValues[0]) + abs(accValues[1])))
+        {
+          // Sprawdzenie gestów na podstawie akcelerometru
+          if (isGestureDetected(axis, ACC_THRESHOLD, accBuffer)) 
           {
-              // Sprawdzenie gestów na podstawie akcelerometru
-              if (isGestureDetected(axis, ACC_THRESHOLD, accBuffer)) {
-                  sendMotion(accGestures[axis][(deltaAcc[axis] > 0) ? 0 : 1]);
-                  sendLog("Accel", deltaAcc, gyroValues);
-                  lastGestureTime = currentTime;
-                  break;
-              }
+            sendMotion(accGestures[axis][(deltaAcc[axis] > 0) ? 0 : 1]);
+            DataPrint();
+            sendLog("Accel", deltaAcc, gyroValues);
+            lastGestureTime = currentTime;
+            break;
           }
-            // Sprawdzenie gestów na podstawie żyroskopu
-            if (isGestureDetected(axis, GYRO_THRESHOLD, gyroBuffer)) {
-                sendMotion(gyroGestures[axis][(gyroValues[axis] > 0) ? 0 : 1]);
-                sendLog("Gyro", deltaAcc, gyroValues);
-                lastGestureTime = currentTime;
-                break;
-            }
         }
+        // Sprawdzenie gestów na podstawie żyroskopu
+        if (isGestureDetected(axis, GYRO_THRESHOLD, gyroBuffer)) 
+        {
+          sendMotion(gyroGestures[axis][(gyroValues[axis] > 0) ? 0 : 1]);
+          DataPrint();
+          sendLog("Gyro", deltaAcc, gyroValues);
+          lastGestureTime = currentTime;
+          break;
+        }
+      }
     }
-  delay(10); // Częstotliwość próbkowania
+  delay(10);
+}
+
+void DataPrint()
+{
+  Serial.print("accX:");
+    Serial.println(deltaAcc[0]);
+    
+    Serial.print("accY:");
+    Serial.println(deltaAcc[1]);
+    
+    Serial.print("accZ:");
+    Serial.println(deltaAcc[2]);
+
+    Serial.print("gyroX:");
+    Serial.println(gyroValues[0]);
+    
+    Serial.print("gyroY:");
+    Serial.println(gyroValues[1]);
+    
+    Serial.print("gyroZ:");
+    Serial.println(gyroValues[2]);
+    Serial.print("..............\n");
 }
 
 float calculateAverage(float buffer[BUFFER_SIZE]) {
@@ -188,22 +191,26 @@ float calculateAverage(float buffer[BUFFER_SIZE]) {
 }
 
 // Funkcja do dodawania wartości do bufora
-void updateBuffer(float acc[3], float gyro[3]) {
-    for (int i = 0; i < 3; ++i) {
-        accBuffer[i][bufferIndex] = acc[i];
-        gyroBuffer[i][bufferIndex] = gyro[i];
-    }
-    bufferIndex = (bufferIndex + 1) % BUFFER_SIZE;  
+void updateBuffer(float acc[3], float gyro[3]) 
+{
+  for (int i = 0; i < 3; ++i) 
+  {
+    accBuffer[i][bufferIndex] = acc[i];
+    gyroBuffer[i][bufferIndex] = gyro[i];
+  }
+  bufferIndex = (bufferIndex + 1) % BUFFER_SIZE;  
 }
 
 // Funkcja sprawdzająca, czy wartości w buforze przekraczają próg przez całą długość bufora
-bool isGestureDetected(int axis, float threshold, float buffer[3][BUFFER_SIZE]) {
-    float avgValue = calculateAverage(buffer[axis]);
-    return abs(avgValue) > threshold;
+bool isGestureDetected(int axis, float threshold, float buffer[3][BUFFER_SIZE]) 
+{
+  float avgValue = calculateAverage(buffer[axis]);
+  return abs(avgValue) > threshold;
 }
 
 
-void sendMotion(const char *motion) {
+void sendMotion(const char *motion) 
+{
   udp.beginPacket(pcIP, port);
   udp.print(motion);
   udp.endPacket();
@@ -227,8 +234,9 @@ void sendLog(const char* type, float acc[3], float gyro[3]) {
   udp.endPacket();
 }
 
-void sendVisualization() {
-    // Wysyłanie kwaternionu po UDP
+void sendVisualization() 
+{
+  // Wysyłanie kwaternionu po UDP
     char buffer[80];
     sprintf(buffer, "%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f", orientation[0], orientation[1], orientation[2], orientation[3],deltaAcc[0],deltaAcc[1],deltaAcc[2]);
     udp.beginPacket(pcIP, visualizationport);
@@ -237,8 +245,9 @@ void sendVisualization() {
 }
 
 
-void processGyroQuaternion(float orientation[4], float gyroValues[3], float accValues[3], float magValues[3], float dt) {
-    // Zamiana wartości z żyroskopu na kwaternion rotacji
+void processQuaternion(float orientation[4], float gyroValues[3], float accValues[3], float magValues[3], float dt) 
+{
+  // Zamiana wartości z żyroskopu na kwaternion rotacji
     float halfDeltaX = gyroValues[0] * 0.5f * dt;
     float halfDeltaY = gyroValues[1] * 0.5f * dt;
     float halfDeltaZ = gyroValues[2] * 0.5f * dt;
@@ -251,7 +260,7 @@ void processGyroQuaternion(float orientation[4], float gyroValues[3], float accV
         sin(halfDeltaZ)
     };
 
-    // Mnożenie orientacji przez przyrost kwaternionu
+    // Mnożenie kwaternionu orientacji przez przyrost kwaternionu
     float q1 = orientation[0];
     float q2 = orientation[1];
     float q3 = orientation[2];
@@ -281,33 +290,27 @@ void processGyroQuaternion(float orientation[4], float gyroValues[3], float accV
       yaw = atan2(magValues[0], magValues[1]);
       yaw += 1.2f;
     }
-
     // Oś Y do góry
     if (accValues[1] > 7)
     {
         yaw = atan2(magValues[1], magValues[2]);
     }
-
     // Oś Y do dołu
     if (accValues[1] < -7)
     {
         yaw = atan2(magValues[1], -magValues[2]);
     }
-
     //Oś X do góry
     if (accValues[0] > 6)
     {
       yaw = atan2(magValues[2], -magValues[0]);
-
     }
-
     //Oś X do dołu
     if (accValues[0] < -6)
     {
       yaw = atan2(-magValues[2], -magValues[0]);
     }
 
-    
     float accQuat[4];
     accQuat[0] = cos(pitch * 0.5f) * cos(roll * 0.5f) * cos(yaw * 0.5f) + sin(pitch * 0.5f) * sin(roll * 0.5f) * sin(yaw * 0.5f);
     accQuat[1] = sin(pitch * 0.5f) * cos(roll * 0.5f) * cos(yaw * 0.5f) - cos(pitch * 0.5f) * sin(roll * 0.5f) * sin(yaw * 0.5f);
@@ -316,12 +319,13 @@ void processGyroQuaternion(float orientation[4], float gyroValues[3], float accV
 
     // Normalizacja kwaternionu akcelerometru
     float accQuatNorm = sqrt(accQuat[0] * accQuat[0] + accQuat[1] * accQuat[1] + accQuat[2] * accQuat[2] + accQuat[3] * accQuat[3]);
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i) 
+    {
         accQuat[i] /= accQuatNorm;
     }
 
-    // Użycie prostego interpolowania
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i) 
+    {
         orientation[i] = orientation[i] * 0.99 + accQuat[i] * 0.01;
     }
 
