@@ -7,12 +7,13 @@
 
 Adafruit_MPU6050 mpu;
 Adafruit_HMC5883_Unified magnetometer = Adafruit_HMC5883_Unified(123458);
+// Nazwa i hasło do sieci nr 1
 const char *pcIP = "192.168.1.5";
-const char *ssid = "Korbank_2.4G_45C23C";
-const char *password = "79200948";
-// Nazwa i hasło do sieci
-const char *ssid2 = "Redmi Note 12";
-const char *password2 = "kubusa";
+const char *ssid = "Korbank";
+const char *password = "792";
+// Nazwa i hasło do sieci nr 2
+const char *ssid2 = "Redmi 12";
+const char *password2 = "plplpl";
 
 // Numery portow dla Udp
 const int port = 12345;

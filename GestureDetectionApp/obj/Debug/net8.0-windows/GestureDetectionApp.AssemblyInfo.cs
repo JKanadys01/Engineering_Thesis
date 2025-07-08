@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GestureDetectionApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b0f6f28c1b10605428667203e94b8ceb5c048ee")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd6acd14678a02fadefdc92b3fd3ff3bd365a02a")]
 [assembly: System.Reflection.AssemblyProductAttribute("GestureDetectionApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GestureDetectionApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
