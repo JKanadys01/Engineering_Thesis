@@ -43,6 +43,7 @@ The desktop application:
 - Hand gesture recognition based on sensor data
 - Sensor fusion for improved accuracy
 - Modular and expandable codebase
+- Separate program for testing gesture detection using the DTW (Dynamic Time Warping) algorithm, implemented solely in the Arduino IDE
 
 ## 🖼️ Preview
 
@@ -53,9 +54,10 @@ https://github.com/user-attachments/assets/81ae36fd-7e36-43f3-bef5-344fb1679d90
 
 ### Requirements
 
+- Arduino IDE (for firmware)
 - Visual Studio (for C# desktop app)
-- Arduino IDE or PlatformIO (for firmware)
-- .NET Framework or .NET Core installed
+![image](https://github.com/user-attachments/assets/7d90d6a8-949e-4ade-b039-f2f614804d88)
+
 
 ### How to Run
 
