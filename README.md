@@ -62,8 +62,9 @@ https://github.com/user-attachments/assets/81ae36fd-7e36-43f3-bef5-344fb1679d90
 ### How to Run
 
 1. Flash the firmware to the microcontroller. Make sure to update the Wi-Fi name, password, and PC IP address in the code (look for comment marked "nr 1").
+   
 ![image](https://github.com/user-attachments/assets/d8811f5f-706c-438a-81aa-102335fc0796)
 
-2. Launch the C# desktop application.
-3. Connect the device and start receiving live data.
+3. Launch the C# desktop application.
+4. Connect the device and start receiving live data.
 
