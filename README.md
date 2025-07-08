@@ -46,7 +46,6 @@ The desktop application:
 
 ## 🖼️ Preview
 
-*(Optional: Add a screenshot or GIF here if available)*
 
 https://github.com/user-attachments/assets/81ae36fd-7e36-43f3-bef5-344fb1679d90
 
@@ -63,6 +62,4 @@ https://github.com/user-attachments/assets/81ae36fd-7e36-43f3-bef5-344fb1679d90
 1. Flash the firmware to the microcontroller, and remember to update your Wi-Fi name and password.
 2. Launch the C# desktop application.
 3. Connect the device and start receiving live data.
-
-## 📁 Folder Structure
 
