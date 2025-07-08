@@ -27,7 +27,7 @@ The microcontroller reads and processes sensor data, which is then sent to a PC 
 
 The firmware written in **C++** performs:
 - Reading and filtering sensor data
-- Calculating orientation using sensor fusion (complementary filter or quaternions)
+- Calculating orientation using sensor fusion (complementary filter and quaternions)
 - Transmitting data to the PC
 
 ### Desktop Application (C#)
