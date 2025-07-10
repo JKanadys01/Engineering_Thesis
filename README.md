@@ -34,7 +34,7 @@ The firmware written in **C++** performs:
 
 The desktop application:
 - Receives real-time data from the device
-- Visualizes the orientation and gestures in a 3D simulation
+- Visualizes the orientation and gestures in a 3D
 - Displays raw sensor readings for debugging
 
 ## 🎯 Features
