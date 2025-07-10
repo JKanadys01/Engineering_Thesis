@@ -1,4 +1,3 @@
-# Praca_Dyplomowa
 # Hand Gesture Detection System Using MEMS Sensors
 
 This project was developed as part of my engineering thesis and focuses on detecting hand gestures using data from MEMS sensors. The system consists of a hardware device based on a microcontroller and a PC application for visualizing motion in real-time.
